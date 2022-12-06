@@ -1,5 +1,5 @@
 use log::info;
-use pentair_wire_protocol::PentairClient;
+use pentair_wire_protocol::client::PentairClient;
 use std::io;
 
 #[tokio::main]
