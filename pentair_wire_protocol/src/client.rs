@@ -1,5 +1,5 @@
-use std::io;
 use log::info;
+use std::io;
 use tokio::net::UdpSocket;
 
 use crate::messages::{BroadcastRequest, BroadcastResponse};
@@ -7,12 +7,11 @@ use crate::messages::{BroadcastRequest, BroadcastResponse};
 const PENTAIR_BROADCAST_HOST: &str = "255.255.255.255:1444";
 
 #[derive(Default)]
-pub struct PentairClient {
-}
+pub struct PentairClient {}
 
 impl PentairClient {
     pub async fn start(&self) -> io::Result<()> {
-        let pentair_server_host = pentair_handshake().await?; 
+        let pentair_server_host = pentair_handshake().await?;
         Ok(())
     }
 }
@@ -33,7 +32,7 @@ async fn pentair_handshake() -> io::Result<String> {
     let mut rx_buf = [0; 12];
     _ = sock.recv_from(&mut rx_buf).await?;
 
-    let broadcast_resp = BroadcastResponse::parse(rx_buf)?; 
+    let broadcast_resp = BroadcastResponse::parse(rx_buf)?;
     info!("received {:?} from pentair", broadcast_resp);
 
     Ok(broadcast_resp.host())

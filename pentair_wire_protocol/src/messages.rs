@@ -1,7 +1,5 @@
-
-use std::io;
-
 use serde::{Deserialize, Serialize};
+use std::io;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct BroadcastResponse {
@@ -20,14 +18,20 @@ impl BroadcastResponse {
         let broadcast_data: BroadcastResponse = bincode::deserialize(&data).unwrap();
 
         if broadcast_data.chk[0] != 2 {
-            return Err(std::io::Error::new(io::ErrorKind::Other, "got unexpected error from pentair response - chk != 2"));
+            return Err(std::io::Error::new(
+                io::ErrorKind::Other,
+                "got unexpected error from pentair response - chk != 2",
+            ));
         }
 
         Ok(broadcast_data)
     }
 
     pub fn host(&self) -> String {
-        format!("{}.{}.{}.{}:{}", self.ip1, self.ip2, self.ip3, self.ip4, self.port)
+        format!(
+            "{}.{}.{}.{}:{}",
+            self.ip1, self.ip2, self.ip3, self.ip4, self.port
+        )
     }
 }
 
