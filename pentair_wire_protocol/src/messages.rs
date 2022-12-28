@@ -48,3 +48,28 @@ impl BroadcastRequest {
         Self { data: arr }
     }
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct LoginMsg {
+    code1: u16,
+    code2: u16,
+    schema: u32,
+    connection_type: u32,
+    version: String,
+    data_array: [u8; 16],
+    process_id: u32,
+}
+
+impl LoginMsg {
+    pub fn new() -> Self {
+        Self {
+            code1: 0,
+            code2: 27,
+            schema: 348,
+            connection_type: 0,
+            version: String::from("Android"),
+            data_array: [0; 16],
+            process_id: 2,
+        }
+    }
+}
