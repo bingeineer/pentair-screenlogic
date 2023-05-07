@@ -19,7 +19,7 @@ impl PentairClient {
 
         info!("connecting to {pentair_server_host}");
         let mut stream = TcpStream::connect(pentair_server_host).await?;
-        let (mut read, mut write) = stream.split();
+        let (_read, mut write) = stream.split();
         let host_str: Vec<u8> = b"CONNECTSERVERHOST".to_vec();
         let conn_num: Vec<u8> = vec![13, 10, 13, 10];
         let res: Vec<u8> = [host_str, conn_num].concat();
@@ -52,7 +52,7 @@ impl PentairClient {
                     debug!("would block");
                     continue;
                 }
-                Err(e) => return Err(e.into()),
+                Err(e) => return Err(e),
             }
         }
 
@@ -79,14 +79,4 @@ async fn pentair_handshake() -> io::Result<String> {
     let broadcast_resp = BroadcastResponse::parse(rx_buf)?;
 
     Ok(broadcast_resp.host())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        assert_eq!(4, 4);
-    }
 }

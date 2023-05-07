@@ -49,6 +49,12 @@ impl BroadcastRequest {
     }
 }
 
+impl Default for BroadcastRequest {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct LoginMsg {
     code1: u16,
@@ -58,6 +64,12 @@ pub struct LoginMsg {
     version: String,
     data_array: [u8; 16],
     process_id: u32,
+}
+
+impl Default for LoginMsg {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl LoginMsg {
